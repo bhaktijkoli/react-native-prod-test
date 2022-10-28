@@ -1,10 +1,10 @@
 fastlane_version '2.210.1'
 
-before_all do
-  ensure_git_branch
-  ensure_git_status_clean
-  git_pull
-end
+# before_all do
+#   ensure_git_branch
+#   ensure_git_status_clean
+#   git_pull
+# end
 
 default_platform :android
 
@@ -13,9 +13,14 @@ platform :ios do
 end
 
 platform :android do
+    desc 'Test the Android application.'
+    lane :tests do
+        gradle(task: "test", project_dir: 'android/')
+    end
     desc 'Build the Android application.'
     lane :build do
         gradle(task: 'clean', project_dir: 'android/')
+        gradle(task: 'bundle', build_type: 'Release', project_dir: 'android/')
         gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
     end
 end
