@@ -35,8 +35,14 @@ jobs:
         env:
           SIGNING_KEY_FILE_HEX: ${{ secrets.SIGNING_KEY_FILE_HEX }}
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+          bundler-cache: true
+
       - name: Release APK
-        run: npm run release
+        run: bundle exec fastlane android build
         env:
           SIGNING_KEY_FILE_HEX: ${{ secrets.SIGNING_KEY_FILE_HEX }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
