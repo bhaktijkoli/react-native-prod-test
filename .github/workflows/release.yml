@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,9 +42,10 @@ jobs:
           bundler-cache: true
 
       - name: Release APK
-        run: bundle exec fastlane android build
+        run: npm run semantic-release
         env:
           SIGNING_KEY_FILE_HEX: ${{ secrets.SIGNING_KEY_FILE_HEX }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SIGNING_KEY_STORE_PASSWORD: ${{ secrets.SIGNING_KEY_STORE_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
