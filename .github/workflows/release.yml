@@ -30,5 +30,15 @@ jobs:
       - name: Install Node Dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Get APK Signing Key
+        run: echo "$SIGNING_KEY_FILE_HEX" | xxd -r -p - > android/app/release.keystore
+        env:
+          SIGNING_KEY_FILE_HEX: ${{ secrets.SIGNING_KEY_FILE_HEX }}
+
       - name: Release APK
         run: npm run release
+        env:
+          SIGNING_KEY_FILE_HEX: ${{ secrets.SIGNING_KEY_FILE_HEX }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_KEY_STORE_PASSWORD: ${{ secrets.SIGNING_KEY_STORE_PASSWORD }}

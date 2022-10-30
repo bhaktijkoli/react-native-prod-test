@@ -219,9 +219,9 @@ android {
         }
         release {
             storeFile file('release.keystore')
-            storePassword System.env.STORE_PASSWORD
-            keyAlias System.env.KEY_ALIAS
-            keyPassword System.env.KEY_PASSWORD
+            storePassword System.env.SIGNING_KEY_STORE_PASSWORD
+            keyAlias System.env.SIGNING_KEY_ALIAS
+            keyPassword System.env.SIGNING_KEY_PASSWORD
         }
     }
     buildTypes {
@@ -234,7 +234,7 @@ android {
             zipAlignEnabled true
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            if(System.getenv().containsKey("KEY_STORE")) {
+            if(System.getenv().containsKey("SIGNING_KEY_FILE_HEX")) {
                 signingConfig signingConfigs.release
             } else {
                 signingConfig signingConfigs.debug
